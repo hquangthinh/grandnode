@@ -1,0 +1,8 @@
+﻿Group: Misc Plugins
+FriendlyName: Example Plugin
+SystemName: Misc.ExamplePlugin
+Version: 1.1
+SupportedVersions: 4.60
+Author: grandnode team
+DisplayOrder: 1
+FileName: Grand.Plugin.Misc.ExamplePlugin.dll

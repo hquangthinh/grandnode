@@ -38,7 +38,12 @@ namespace Grand.Plugin.Misc.ExamplePlugin.Controllers
             model.Login = _settings.Login;
             model.Password = _settings.Password;
 
-            return View("~/Plugins/Misc.ExamplePlugin/Views/Configure.cshtml",model);
+            return View("~/Plugins/Misc.ExamplePlugin/Views/Configure.cshtml", model);
+        }
+
+        public IActionResult SignIn()
+        {
+            return View("~/Plugins/Misc.ExamplePlugin/Views/SignIn.cshtml");
         }
 
         #endregion

@@ -47,12 +47,12 @@ namespace Grand.Services.Authentication
                 _errorMessage = "Email not exists/or not active in the customer table";
                 return await Task.FromResult(false);
             }
-            var userapi = await _userApiService.GetUserByEmail(_email);
-            if (userapi == null || !userapi.IsActive)
-            {
-                _errorMessage = "User api not exists/or not active in the user api table";
-                return await Task.FromResult(false);
-            }
+            // var userapi = await _userApiService.GetUserByEmail(_email);
+            // if (userapi == null || !userapi.IsActive)
+            // {
+            //     _errorMessage = "User api not exists/or not active in the user api table";
+            //     return await Task.FromResult(false);
+            // }
             return await Task.FromResult(true);
         }
 

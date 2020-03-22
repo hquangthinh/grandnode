@@ -24,6 +24,8 @@ RUN dotnet build Plugins/Grand.Plugin.Tax.FixedRate
 RUN dotnet build Plugins/Grand.Plugin.Widgets.GoogleAnalytics
 RUN dotnet build Plugins/Grand.Plugin.Widgets.FacebookPixel
 RUN dotnet build Plugins/Grand.Plugin.Widgets.Slider
+RUN dotnet build Plugins/Grand.Plugin.Misc.ExamplePlugin
+RUN dotnet build Plugins/Grand.Plugin.Api.Extended
 
 # publish project
 RUN dotnet publish Grand.Web -c Release -o out

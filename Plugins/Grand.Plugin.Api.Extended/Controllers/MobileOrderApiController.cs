@@ -48,7 +48,6 @@ namespace Grand.Plugin.Api.Extended.Controllers
         
         #region Methods
         
-        //My account / Orders
         [Route("my-orders")]
         public virtual async Task<IActionResult> CustomerOrders()
         {
@@ -57,6 +56,18 @@ namespace Grand.Plugin.Api.Extended.Controllers
 
             var model = await _orderViewModelService.PrepareCustomerOrderList();
             
+            return Ok(model);
+        }
+
+        [Route("{orderId}")]
+        public virtual async Task<IActionResult> Details([FromRoute] string orderId)
+        {
+            var order = await _orderService.GetOrderById(orderId);
+            if (order == null || order.Deleted || _workContext.CurrentCustomer.Id != order.CustomerId)
+                return Unauthorized();
+        
+            var model = await _orderViewModelService.PrepareOrderDetails(order);
+        
             return Ok(model);
         }
         

@@ -20,7 +20,6 @@ namespace Grand.Plugin.Misc.ExamplePlugin
         {
             builder.RegisterType<ExamplePlugin>().InstancePerLifetimeScope();
             builder.RegisterType<ExampleService>().As<IExampleService>().InstancePerLifetimeScope();
-            builder.RegisterType<OverrideProductService>().As<IProductService>().InstancePerLifetimeScope();
             builder.RegisterType<ExampleTask>().As<IScheduleTask>().InstancePerLifetimeScope();
         }
 

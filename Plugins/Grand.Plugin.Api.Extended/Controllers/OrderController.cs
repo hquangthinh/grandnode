@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Grand.Plugin.Api.Extended.Controllers
 {
+    /// <summary>
+    /// Order Odata api
+    /// </summary>
     public partial class OrderController : BaseODataController
     {
         private readonly IMongoDBContext _mongoDBContext;

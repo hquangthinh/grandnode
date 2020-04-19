@@ -1,8 +1,26 @@
 version: '3.4'
 
 services:
+  grand.mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: 123Qwe
+    ports: 
+      - 27017:27017
+    volumes: 
+      - mongodb_data_container:/data/db
+
   grand.web:
     image: ${DOCKER_REGISTRY-}grandweb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:16592
+    ports: 
+      - 16592:16592
     build:
       context: .
       dockerfile: Grand.Web/Dockerfile
+
+volumes: 
+  mongodb_data_container:

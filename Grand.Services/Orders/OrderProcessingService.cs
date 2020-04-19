@@ -504,36 +504,36 @@ namespace Grand.Services.Orders
                 throw new GrandException("Cart is empty");
 
             //validate the entire shopping cart
-            var warnings = await _shoppingCartService.GetShoppingCartWarnings(details.Cart,
-                details.CheckoutAttributesXml,
-                true);
-            if (warnings.Any())
-            {
-                var warningsSb = new StringBuilder();
-                foreach (string warning in warnings)
-                {
-                    warningsSb.Append(warning);
-                    warningsSb.Append(";");
-                }
-                throw new GrandException(warningsSb.ToString());
-            }
+            //var warnings = await _shoppingCartService.GetShoppingCartWarnings(details.Cart,
+            //    details.CheckoutAttributesXml,
+            //    true);
+            //if (warnings.Any())
+            //{
+            //    var warningsSb = new StringBuilder();
+            //    foreach (string warning in warnings)
+            //    {
+            //        warningsSb.Append(warning);
+            //        warningsSb.Append(";");
+            //    }
+            //    throw new GrandException(warningsSb.ToString());
+            //}
 
             //validate individual cart items
-            foreach (var sci in details.Cart)
-            {
-                var product = await _productService.GetProductById(sci.ProductId);
-                var sciWarnings = await _shoppingCartService.GetShoppingCartItemWarnings(details.Customer, sci, product, false);
-                if (sciWarnings.Any())
-                {
-                    var warningsSb = new StringBuilder();
-                    foreach (string warning in sciWarnings)
-                    {
-                        warningsSb.Append(warning);
-                        warningsSb.Append(";");
-                    }
-                    throw new GrandException(warningsSb.ToString());
-                }
-            }
+            //foreach (var sci in details.Cart)
+            //{
+            //    var product = await _productService.GetProductById(sci.ProductId);
+            //    var sciWarnings = await _shoppingCartService.GetShoppingCartItemWarnings(details.Customer, sci, product, false);
+            //    if (sciWarnings.Any())
+            //    {
+            //        var warningsSb = new StringBuilder();
+            //        foreach (string warning in sciWarnings)
+            //        {
+            //            warningsSb.Append(warning);
+            //            warningsSb.Append(";");
+            //        }
+            //        throw new GrandException(warningsSb.ToString());
+            //    }
+            //}
 
             //min totals validation
             bool minOrderSubtotalAmountOk = await ValidateMinOrderSubtotalAmount(details.Cart);

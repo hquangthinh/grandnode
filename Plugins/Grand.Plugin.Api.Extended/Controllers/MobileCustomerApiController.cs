@@ -101,7 +101,7 @@ namespace Grand.Plugin.Api.Extended.Controllers
         #endregion
         
         [Route("info")]
-        public virtual async Task<IActionResult> Info()
+        public virtual async Task<IActionResult> GetCurrentCustomerInfo()
         {
             if (!_workContext.CurrentCustomer.IsRegistered())
                 return Challenge();
@@ -115,4 +115,5 @@ namespace Grand.Plugin.Api.Extended.Controllers
             return Ok(model);
         }
     }
+
 }

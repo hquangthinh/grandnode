@@ -114,6 +114,19 @@ namespace Grand.Plugin.Api.Extended.Controllers
 
             return Ok(model);
         }
+
+        [Route("addresses")]
+        public virtual async Task<IActionResult> GetCurrentCustomerAddresses()
+        {
+            if (!_workContext.CurrentCustomer.IsRegistered())
+                return Challenge();
+
+            var customer = _workContext.CurrentCustomer;
+
+            var addresses = await _customerViewModelService.PrepareAddressList(customer);
+
+            return Ok(addresses);
+        }
     }
 
 }

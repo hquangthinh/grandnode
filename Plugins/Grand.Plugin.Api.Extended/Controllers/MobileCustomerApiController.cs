@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Grand.Core;
 using Grand.Core.Domain.Customers;
 using Grand.Core.Domain.Localization;
@@ -126,6 +127,26 @@ namespace Grand.Plugin.Api.Extended.Controllers
             var addresses = await _customerViewModelService.PrepareAddressList(customer);
 
             return Ok(addresses);
+        }
+
+        [Route("delete-address/{addressId}")]
+        public virtual async Task<IActionResult> DeleteAddress(string addressId)
+        {
+            if (!_workContext.CurrentCustomer.IsRegistered())
+                return Challenge();
+
+            var customer = _workContext.CurrentCustomer;
+
+            //find address (ensure that it belongs to the current customer)
+            var address = customer.Addresses.FirstOrDefault(a => a.Id == addressId);
+            if (address != null)
+            {
+                customer.RemoveAddress(address);
+                address.CustomerId = customer.Id;
+                await _customerService.DeleteAddress(address);
+            }
+
+            return await GetCurrentCustomerAddresses();
         }
     }
 

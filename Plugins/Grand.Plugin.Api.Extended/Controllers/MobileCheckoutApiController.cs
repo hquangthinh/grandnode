@@ -224,8 +224,10 @@ namespace Grand.Plugin.Api.Extended.Controllers
                         address.CreatedOnUtc = DateTime.UtcNow;
                         _workContext.CurrentCustomer.Addresses.Add(address);
                         address.CustomerId = _workContext.CurrentCustomer.Id;
-                        _workContext.CurrentCustomer.BillingAddress = address;
                         await _customerService.InsertAddress(address);
+
+                        _workContext.CurrentCustomer.BillingAddress = address;
+                        await _customerService.UpdateBillingAddress(address);
                     }
                     else
                     {
@@ -236,57 +238,49 @@ namespace Grand.Plugin.Api.Extended.Controllers
                 }
 
                 // shipping address
-                if (_shippingSettings.ShipToSameAddress && command.ShipToSameAddress)
+                var shipAaddress = _workContext.CurrentCustomer.Addresses.FirstOrDefault(a => a.Id == command.ShippingAddress.Id);
+
+                if (shipAaddress != null)
                 {
-                    _workContext.CurrentCustomer.ShippingAddress = (Address)_workContext.CurrentCustomer.BillingAddress.Clone();
-                    await _customerService.UpdateShippingAddress(_workContext.CurrentCustomer.BillingAddress);
-                    await _genericAttributeService.SaveAttribute<ShippingOption>(_workContext.CurrentCustomer, SystemCustomerAttributeNames.SelectedShippingOption, null, _storeContext.CurrentStore.Id);
-                    await _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.SelectedPickupPoint, "", _storeContext.CurrentStore.Id);
+                    _workContext.CurrentCustomer.ShippingAddress = shipAaddress;
+                    shipAaddress.CustomerId = _workContext.CurrentCustomer.Id;
+                    await _customerService.UpdateShippingAddress(shipAaddress);
                 }
                 else
                 {
-                    var shipAaddress = _workContext.CurrentCustomer.Addresses.FirstOrDefault(a => a.Id == command.ShippingAddress.Id);
-
-                    if (shipAaddress != null)
+                    //try to find an address with the same values (don't duplicate records)
+                    shipAaddress = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
+                        command.ShippingAddress.FirstName,
+                        command.ShippingAddress.LastName,
+                        command.ShippingAddress.PhoneNumber,
+                        command.ShippingAddress.Email,
+                        command.ShippingAddress.FaxNumber,
+                        command.ShippingAddress.Company,
+                        command.ShippingAddress.Address1,
+                        command.ShippingAddress.Address2,
+                        command.ShippingAddress.City,
+                        command.ShippingAddress.StateProvinceId,
+                        command.ShippingAddress.ZipPostalCode,
+                        command.ShippingAddress.CountryId,
+                        command.ShippingAddress.CustomAttributes
+                    );
+                    if (shipAaddress == null)
                     {
-                        _workContext.CurrentCustomer.ShippingAddress = shipAaddress;
+                        //address is not found. let's create a new one
+                        shipAaddress = command.ShippingAddress;
+                        shipAaddress.CreatedOnUtc = DateTime.UtcNow;
+                        _workContext.CurrentCustomer.Addresses.Add(shipAaddress);
                         shipAaddress.CustomerId = _workContext.CurrentCustomer.Id;
+                        await _customerService.InsertAddress(shipAaddress);
+
+                        _workContext.CurrentCustomer.ShippingAddress = shipAaddress;
                         await _customerService.UpdateShippingAddress(shipAaddress);
                     }
                     else
                     {
-                        //try to find an address with the same values (don't duplicate records)
-                        shipAaddress = _workContext.CurrentCustomer.Addresses.ToList().FindAddress(
-                            command.ShippingAddress.FirstName,
-                            command.ShippingAddress.LastName,
-                            command.ShippingAddress.PhoneNumber,
-                            command.ShippingAddress.Email,
-                            command.ShippingAddress.FaxNumber,
-                            command.ShippingAddress.Company,
-                            command.ShippingAddress.Address1,
-                            command.ShippingAddress.Address2,
-                            command.ShippingAddress.City,
-                            command.ShippingAddress.StateProvinceId,
-                            command.ShippingAddress.ZipPostalCode,
-                            command.ShippingAddress.CountryId,
-                            command.ShippingAddress.CustomAttributes
-                        );
-                        if (shipAaddress == null)
-                        {
-                            //address is not found. let's create a new one
-                            shipAaddress = command.ShippingAddress;
-                            shipAaddress.CreatedOnUtc = DateTime.UtcNow;
-                            _workContext.CurrentCustomer.Addresses.Add(shipAaddress);
-                            _workContext.CurrentCustomer.ShippingAddress = shipAaddress;
-                            shipAaddress.CustomerId = _workContext.CurrentCustomer.Id;
-                            await _customerService.InsertAddress(shipAaddress);
-                        }
-                        else
-                        {
-                            _workContext.CurrentCustomer.ShippingAddress = shipAaddress;
-                            shipAaddress.CustomerId = _workContext.CurrentCustomer.Id;
-                            await _customerService.UpdateShippingAddress(shipAaddress);
-                        }
+                        _workContext.CurrentCustomer.ShippingAddress = shipAaddress;
+                        shipAaddress.CustomerId = _workContext.CurrentCustomer.Id;
+                        await _customerService.UpdateShippingAddress(shipAaddress);
                     }
                 }
 

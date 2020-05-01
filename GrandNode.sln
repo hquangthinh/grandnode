@@ -68,11 +68,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grand.Plugin.Widgets.FacebookPixel", "Plugins\Grand.Plugin.Widgets.FacebookPixel\Grand.Plugin.Widgets.FacebookPixel.csproj", "{E5400FBA-C6B9-4477-83F3-8EA523B62232}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grand.Plugin.Widgets.FacebookPixel", "Plugins\Grand.Plugin.Widgets.FacebookPixel\Grand.Plugin.Widgets.FacebookPixel.csproj", "{E5400FBA-C6B9-4477-83F3-8EA523B62232}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grand.Plugin.Misc.ExamplePlugin", "Plugins\Grand.Plugin.Misc.ExamplePlugin\Grand.Plugin.Misc.ExamplePlugin.csproj", "{FDEE0469-2742-4337-8EDD-73C788363A35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grand.Plugin.Misc.ExamplePlugin", "Plugins\Grand.Plugin.Misc.ExamplePlugin\Grand.Plugin.Misc.ExamplePlugin.csproj", "{FDEE0469-2742-4337-8EDD-73C788363A35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grand.Plugin.Api.Extended", "Plugins\Grand.Plugin.Api.Extended\Grand.Plugin.Api.Extended.csproj", "{5DFD05DF-482A-41C5-82B6-E21176F9ED74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grand.Plugin.Api.Extended", "Plugins\Grand.Plugin.Api.Extended\Grand.Plugin.Api.Extended.csproj", "{5DFD05DF-482A-41C5-82B6-E21176F9ED74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

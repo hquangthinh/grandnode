@@ -1,4 +1,6 @@
-﻿namespace Grand.Plugin.Api.Extended.DTOs
+﻿using System.Collections.Generic;
+
+namespace Grand.Plugin.Api.Extended.DTOs
 {
     public class ApiResponse<TData>
     {
@@ -13,6 +15,8 @@
         public bool HasError => !Success;
 
         public bool HasData => Data != null;
+
+        public List<string> AggregateErrors { get; private set; } = new List<string>();
 
         public static ApiResponse<TData> SuccessResult(TData data)
         {

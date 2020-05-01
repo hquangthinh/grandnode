@@ -1,0 +1,9 @@
+﻿Group: ExternalAuth methods
+FriendlyName: App OAuth authentication
+SystemName: ExternalAuth.AppOAuth
+Version: 1.0
+SupportedVersions: 4.60
+Author: vsales team
+DisplayOrder: 6
+FileName: Grand.Plugin.ExternalAuth.AppOAuth.dll
+Description: This plugin enables OAuth authentication which authenticate against app database

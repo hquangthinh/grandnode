@@ -45,7 +45,7 @@ namespace Grand.Plugin.Api.Extended.Controllers
             _orderProcessingService = orderProcessingService;
             _paymentService = paymentService;
             _localizationService = localizationService;
-            shipmentService = _shipmentService;
+            _shipmentService = shipmentService;
             _orderSettings = orderSettings;
         }
 
